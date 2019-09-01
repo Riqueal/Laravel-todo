@@ -14,6 +14,11 @@ class TasksController extends Controller
     }
 
     public function store(Request $request){
+
+        $request->validate([
+            'name'=>'required|max:255',
+            'complete'=>'required'
+        ]);
         
         $task = Task::create([
             'name'=>$request->input('name'),
@@ -31,6 +36,10 @@ class TasksController extends Controller
 
     public function update(Request $request, Task $task){
 
+        $request->validate([
+            'name'=>'required|max:255'
+        ]);
+
         $task->name = $request->input('name');
 
         $task->save();
@@ -44,6 +53,6 @@ class TasksController extends Controller
         $task->delete();
 
         return response()->json(['success'=>true]);
-        
+
     }
 }
